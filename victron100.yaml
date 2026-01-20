@@ -1,15 +1,25 @@
 esphome:
   name: victron100
-  friendly_name: victron100
 
 esp32:
   board: esp32dev
   framework:
-    type: esp-idf
+    type: arduino
 
-# Enable logging
-logger:
+external_components:
+  - source: github://posix88/esphome-victron_ble
 
+esp32_ble_tracker:
+
+victron_ble:
+  - id: victron_device
+    mac_address: "FD:73:77:2D:06:1B"
+    bindkey: "3adb61758fc08fc8768f324232b8ccd0"
+
+wifi:
+  ssid: "Dax-Wifi"
+  password: "sony1983"
+  
 # Enable Home Assistant API
 api:
   encryption:
@@ -18,10 +28,7 @@ api:
 ota:
   - platform: esphome
     password: "a7949636aa18c701d20d757ac5fe74fe"
-
-wifi:
-  ssid: "Dax-Wifi"
-  password: "sony1983"
+  
 
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
@@ -29,15 +36,6 @@ wifi:
     password: "AtrFpCRcOoQ7"
 
 captive_portal:
-external_components:
-  - source: github://Fabian-Schmidt/esphome-victron_ble
-
-esp32_ble_tracker:
-
-victron_ble:
-  - id: MySmartShunt
-    mac_address: "FD:73:77:2D:06:1B"
-    bindkey: "3adb61758fc08fc8768f324232b8ccd0"
     
     # Advanced users can use `on_*_message` action. The data is in the `message` variable.
     on_battery_monitor_message:
