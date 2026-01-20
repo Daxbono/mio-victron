@@ -12,7 +12,7 @@ external_components:
 esp32_ble_tracker:
 
 victron_ble:
-  - id: victron_device
+  - id: my_victron
     mac_address: "FD:73:77:2D:06:1B"
     bindkey: "3adb61758fc08fc8768f324232b8ccd0"
 
