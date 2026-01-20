@@ -7,9 +7,9 @@ jobs:
       - uses: actions/checkout@v4
       - uses: esphome/build-action@main
         with:
-          yaml_file: victron100.yaml
+          yaml_file: "*.yaml"
           version: latest
       - uses: actions/upload-artifact@v4
         with:
           name: victron-bin
-          path: .esphome/build/victron100/**/*.bin
+          path: .esphome/build/**/.pioenvs/**/firmware.bin
