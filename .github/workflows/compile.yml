@@ -1,0 +1,15 @@
+name: Compile ESPHome
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: esphome/build-action@v2
+        with:
+          yaml_file: victron100.yaml
+          version: latest
+      - uses: actions/upload-artifact@v3
+        with:
+          name: victron-bin
+          path: .esphome/build/victron100/.pioenvs/victron100/firmware.bin
