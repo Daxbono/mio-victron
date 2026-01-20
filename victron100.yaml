@@ -1,66 +1,21 @@
 esphome:
-  name: victron100
+  name: "victron-ble"
+
+external_components:
+  - source: github://Fabian-Schmidt/esphome-victron_ble
 
 esp32:
   board: esp32dev
-  framework:
-    type: arduino
 
-external_components:
-  - source: github://posix88/esphome-victron_ble
+logger:
+  level: DEBUG
 
 esp32_ble_tracker:
 
 victron_ble:
-  - id: my_victron
-    mac_address: "FD:73:77:2D:06:1B"
+  - id: MySmartShunt
+    mac_address: "FD:73:77:2D:06:1B"    
     bindkey: "3adb61758fc08fc8768f324232b8ccd0"
-
-wifi:
-  ssid: "Dax-Wifi"
-  password: "sony1983"
-  
-# Enable Home Assistant API
-api:
-  encryption:
-    key: "hNhdeORfBYQMF+eDZxxHCFkEypbZQPsr1Mk3g8CX9Os="
-
-ota:
-  - platform: esphome
-    password: "a7949636aa18c701d20d757ac5fe74fe"
-  
-
-  # Enable fallback hotspot (captive portal) in case wifi connection fails
-  ap:
-    ssid: "Victron100 Fallback Hotspot"
-    password: "AtrFpCRcOoQ7"
-
-captive_portal:
-    
-    # Advanced users can use `on_*_message` action. The data is in the `message` variable.
-    on_battery_monitor_message:
-      - logger.log: "Message from Battery Monitor."
-    on_solar_charger_message:
-      - logger.log: "Message from Solar Charger."
-    on_inverter_message:
-      - logger.log: "Message from Inverter."
-    on_dcdc_converter_message:
-      - logger.log: "Message from DC/DC Converter."
-    on_smart_lithium_message:
-      - logger.log: "Message from Smart Lithium."
-    on_inverter_rs_message:
-      - logger.log: "Message from Inverter RS."
-    on_smart_battery_protect_message:
-      - logger.log: "Message from Smart Battery Protect."
-    on_lynx_smart_bms_message:
-      - logger.log: "Message from Lynx Smart BMS."
-    on_multi_rs_message:
-      - logger.log: "Message from Multi RS."
-    on_ve_bus_message:
-      - logger.log: "Message from VE.Bus."
-    on_dc_energy_meter_message:
-      - logger.log: "Message from DC Energy Meter."
-
   - id: MySmartSolar
     mac_address: "FD:73:77:2D:06:1B"
     bindkey: "3adb61758fc08fc8768f324232b8ccd0"
@@ -73,17 +28,17 @@ sensor:
     type: TIME_TO_GO
   - platform: victron_ble
     victron_ble_id: MySmartShunt
-    name: "Batteria voltage"
+    name: "Battery Voltage"
     type: BATTERY_VOLTAGE
   - platform: victron_ble
     victron_ble_id: MySmartShunt
-    name: "Starter Battery"
-    # BAUX_VOLTAGE or MID_VOLTAGE or TEMPERATURE.
-    # Depending on configuration of SmartShunt
+    name: "Starter Battery Voltage"
+    # AUX_VOLTAGE or MID_VOLTAGE or TEMPERATURE.
+    # Depending on configuration of SmartShunt.
     type: AUX_VOLTAGE
   - platform: victron_ble
     victron_ble_id: MySmartShunt
-    name: "Current"
+    name: "Battery Current"
     type: BATTERY_CURRENT
   - platform: victron_ble
     victron_ble_id: MySmartShunt
@@ -97,23 +52,23 @@ sensor:
   # MySmartSolar
   - platform: victron_ble
     victron_ble_id: MySmartSolar
-    name: "Battery Voltage"
+    name: "MPPT Output Voltage"
     type: BATTERY_VOLTAGE
   - platform: victron_ble
     victron_ble_id: MySmartSolar
-    name: "Battery Current"
+    name: "MPPT Output Current"
     type: BATTERY_CURRENT
   - platform: victron_ble
     victron_ble_id: MySmartSolar
-    name: "Yield Today"
+    name: "MPPT Yield Today"
     type: YIELD_TODAY
   - platform: victron_ble
     victron_ble_id: MySmartSolar
-    name: "PV Power"
+    name: "MPPT PV Power"
     type: PV_POWER
   - platform: victron_ble
     victron_ble_id: MySmartSolar
-    name: "Load Current"
+    name: "MPPT Load Current"
     type: LOAD_CURRENT
 
 binary_sensor:
@@ -144,5 +99,4 @@ text_sensor:
   - platform: victron_ble
     victron_ble_id: MySmartSolar
     name: "MPPT Error reason"
-    type: CHARGER_ERROR  
-   
+    type: CHARGER_ERROR
